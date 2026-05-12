@@ -1,0 +1,204 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #4d61ff;
+  --color-brand-dark: #32325d;
+  --color-brand-muted: #8898aa;
+  --color-brand-border: #dee2e6;
+  --radius-dna: 0.5rem;
+  --shadow-dna: 0 4px 11px rgba(77, 97, 255, 0.35);
+}
+
+:root {
+  --surface-page: oklch(98.4% 0.009 285);
+  --surface-card: oklch(100% 0 0 / 0.84);
+  --surface-strong: oklch(20.7% 0.04 286);
+  --text-primary: oklch(25.5% 0.02 276);
+  --text-secondary: oklch(49% 0.022 275);
+  --brand-500: oklch(58% 0.21 312);
+  --brand-600: oklch(52% 0.2 312);
+  --brand-100: oklch(94% 0.035 312);
+  --ring-soft: 0 0 0 6px color-mix(in oklab, var(--brand-500), white 82%);
+}
+
+@keyframes ambientShift {
+  0% {
+    background-position: 0% 30%, 100% 10%, 50% 100%;
+  }
+  50% {
+    background-position: 18% 8%, 78% 24%, 44% 84%;
+  }
+  100% {
+    background-position: 0% 30%, 100% 10%, 50% 100%;
+  }
+}
+
+@keyframes floatBlob {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  50% {
+    transform: translate3d(0, -20px, 0) scale(1.05);
+  }
+}
+
+@keyframes pulseSoft {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+body {
+  min-height: 100dvh;
+  color: var(--text-primary);
+  background: linear-gradient(135deg, 
+    oklch(35% 0.18 310) 0%,
+    oklch(42% 0.20 320) 25%,
+    oklch(48% 0.19 330) 50%,
+    oklch(45% 0.18 340) 75%,
+    oklch(38% 0.17 350) 100%);
+  background-attachment: fixed;
+  position: relative;
+}
+
+.ambient-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(56px);
+  animation: floatBlob 8s ease-in-out infinite;
+}
+
+.ambient-blob--one {
+  width: 280px;
+  height: 280px;
+  left: -56px;
+  top: 92px;
+  background: oklch(65% 0.18 320 / 0.35);
+}
+
+.ambient-blob--two {
+  width: 320px;
+  height: 320px;
+  right: -80px;
+  top: 132px;
+  background: oklch(60% 0.20 330 / 0.30);
+  animation-delay: 1.5s;
+}
+
+.ambient-blob--three {
+  width: 260px;
+  height: 260px;
+  left: 30%;
+  bottom: -90px;
+  background: oklch(55% 0.19 345 / 0.28);
+  animation-delay: 0.8s;
+}
+
+.hero-glow {
+  animation: pulseSoft 4.4s ease-in-out infinite;
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/70 bg-white/75 backdrop-blur-xl;
+    box-shadow: 0 24px 56px oklch(22% 0.03 280 / 0.12);
+  }
+
+  .hero-panel {
+    background: linear-gradient(135deg, oklch(18% 0.045 275), oklch(30% 0.11 308));
+    box-shadow: 0 24px 54px oklch(31% 0.12 308 / 0.35);
+  }
+
+  .pill-action {
+    @apply rounded-full border px-4 py-2 text-sm font-semibold transition;
+    border-color: color-mix(in oklab, var(--brand-500), white 74%);
+    color: var(--text-secondary);
+  }
+
+  .pill-action:hover {
+    background: color-mix(in oklab, var(--brand-500), white 90%);
+    color: var(--brand-600);
+  }
+
+  .input-luxe {
+    @apply w-full rounded-2xl border bg-white/90 px-4 py-3 text-sm font-medium outline-none transition;
+    border-color: color-mix(in oklab, var(--brand-500), white 84%);
+  }
+
+  .input-luxe:focus {
+    border-color: var(--brand-500);
+    box-shadow: var(--ring-soft);
+  }
+
+  .card-luxe {
+    @apply relative overflow-hidden rounded-[1.8rem] border bg-white/85 p-3 backdrop-blur-xl transition duration-500;
+    border-color: color-mix(in oklab, var(--brand-500), white 86%);
+    box-shadow: 0 18px 38px oklch(22% 0.03 290 / 0.16);
+  }
+
+  .card-luxe:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 50px oklch(56% 0.15 312 / 0.23);
+  }
+
+  .product-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  }
+
+  @supports (container-type: inline-size) {
+    .card-luxe {
+      container-type: inline-size;
+    }
+
+    @container (width < 240px) {
+      .card-cta {
+        width: 100%;
+      }
+    }
+  }
+
+  .input-dna {
+    @apply w-full border-b border-brand-border py-2 text-brand-dark 
+           outline-none transition-all duration-200 
+           focus:border-brand-blue placeholder:text-brand-muted/50;
+  }
+
+  .btn-dna {
+    @apply flex items-center justify-center gap-2 bg-brand-blue text-white 
+           px-8 py-3 rounded-dna font-semibold transition-all 
+           hover:brightness-110 hover:shadow-dna active:scale-95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .ambient-blob,
+  .hero-glow {
+    animation: none !important;
+  }
+}
