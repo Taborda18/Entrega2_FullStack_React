@@ -1,7 +1,7 @@
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import smile from "../../../assets/smile.png";
+import logo1 from "../../../assets/logo1.png";
 import { loginUser } from "../../../services/authService";
 import { loginWithFakeStore } from "../../../services/fakeStoreAuth";
 
@@ -61,18 +61,19 @@ const Login = () => {
           background: 'linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)',
         }}
       >
-        {/* Header con Icono */}
+        {/* Header con Logo */}
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.1 }}
           className="flex flex-col items-center mb-12"
         >
-          <div className="mb-4">
-            <img src={smile} alt="Smile Icon" className="w-16 h-16 drop-shadow-lg" />
+          <div className="mb-6 relative h-20 w-20">
+            <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-fuchsia-400 to-pink-500 blur-xl opacity-70" />
+            <img src={logo1} alt="Luxury Store Logo" className="relative h-full w-full rounded-2xl object-cover ring-2 ring-white/30 shadow-xl" />
           </div>
           <h1 className="text-3xl font-black bg-gradient-to-r from-white via-pink-100 to-fuchsia-200 bg-clip-text text-transparent mb-2">
-            Welcome!
+            Luxury Store
           </h1>
           <p className="text-white/60 text-sm">Sign in to your account</p>
         </motion.div>
