@@ -38,10 +38,13 @@ export const subscribeToAuthChanges = (callback) => {
   handler();
   window.addEventListener("storage", handler);
   window.addEventListener("template-auth-change", handler);
+  // ✅ AGREGADO: También escucha fakestore-auth-change
+  window.addEventListener("fakestore-auth-change", handler);
 
   return () => {
     window.removeEventListener("storage", handler);
     window.removeEventListener("template-auth-change", handler);
+    window.removeEventListener("fakestore-auth-change", handler);
   };
 };
 

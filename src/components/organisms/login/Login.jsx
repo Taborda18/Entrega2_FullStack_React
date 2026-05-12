@@ -42,103 +42,80 @@ const Login = () => {
     }
   };
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-50 p-6">
-      <div className="w-full max-w-md bg-white p-10 rounded-3xl shadow-sm border border-gray-100">
-
+    <div className="flex items-center justify-center min-h-screen bg-gradient-to-br from-purple-50 via-purple-100 to-fuchsia-50 p-6">
+      <div className="form-container">
         {/* Header con Icono */}
-        <div className="flex flex-col items-center mb-12">
+        <div className="flex flex-col items-center mb-8">
           <div className="mb-4">
-            {/* Icono similar al de la imagen */}
-            <img src={smile} alt="Smile Icon" className="w-[64px] h-[64px]" />
+            <img src={smile} alt="Smile Icon" className="w-16 h-16 animate-bounce-in" />
           </div>
-          <h1 className="text-4xl font-bold text-slate-800 mb-2">Welcome!</h1>
-          <p className="text-slate-400 text-lg">Sign in to your account</p>
+          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent mb-2">Welcome!</h1>
+          <p className="text-gray-600 text-base">Sign in to your account</p>
         </div>
 
         {error && (
-          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+          <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg animate-slide-down">
             {error}
           </div>
         )}
 
-        <form className="space-y-10" onSubmit={handleSubmit}>
-
+        <form className="space-y-6" onSubmit={handleSubmit}>
           {/* Input de Email */}
-          <div className="relative group">
-            <label className="block text-slate-400 text-lg mb-1 group-focus-within:text-blue-500 transition-colors">
-              Email
-            </label>
-            <div className="relative border-b border-gray-200 group-focus-within:border-blue-500 transition-all">
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                className="w-full py-2 bg-transparent focus:outline-none text-slate-700 pr-10"
-                required
-              />
-              <span className="absolute right-0 top-2 text-slate-300">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-                </svg>
-              </span>
-            </div>
+          <div className="form-group">
+            <label className="form-label">Email</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              placeholder="john@example.com"
+              className="form-input"
+              required
+            />
           </div>
 
           {/* Input de Password */}
-          <div className="relative group">
-            <label className="block text-slate-400 text-lg mb-1 group-focus-within:text-blue-500 transition-colors">
-              Password
-            </label>
-            <div className="relative border-b border-gray-200 group-focus-within:border-blue-500 transition-all">
-              <input
-                type="password"
-                name="password"
-                value={formData.password}
-                onChange={handleChange}
-                className="w-full py-2 bg-transparent focus:outline-none text-slate-700 pr-10"
-                required
-              />
-              <span className="absolute right-0 top-2 text-slate-300 cursor-pointer hover:text-blue-500 transition-colors">
-                <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
-                </svg>
-              </span>
-            </div>
+          <div className="form-group">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              placeholder="••••••••"
+              className="form-input"
+              required
+            />
           </div>
 
           {/* Opciones de Remember y Forgot */}
-          <div className="flex items-center justify-between text-slate-400">
-            <label className="flex items-center space-x-3 cursor-pointer">
+          <div className="flex items-center justify-between text-gray-600 text-sm">
+            <label className="flex items-center gap-2 cursor-pointer">
               <input
                 type="checkbox"
-                className="w-5 h-5 border-gray-300 rounded focus:ring-blue-500 transition-all"
+                className="w-4 h-4 rounded border-purple-300"
               />
-              <span className="text-lg">remember me?</span>
+              <span>Remember me</span>
             </label>
-            <a href="#" className="text-blue-500 hover:text-blue-600 transition-colors text-lg">
-              forgot password?
+            <a href="#" className="text-purple-600 hover:text-purple-700 transition-colors">
+              Forgot password?
             </a>
           </div>
 
           {/* Botón de Login */}
           <button
             type="submit"
-            className="w-3/5 py-4 btn-dna hover:bg-blue-700 text-white font-bold rounded-xl flex items-center justify-center space-x-3 transition-all shadow-lg shadow-blue-200 active:scale-95"
+            className="form-btn w-full"
           >
-            <span className="text-xl">Login</span>
-            <svg
-              className="w-6 h-6"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-              strokeWidth="2.5"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
+            Login
           </button>
 
         </form>
+
+        {/* Link to Register */}
+        <div className="mt-6 text-center text-gray-600">
+          <p>Don't have an account? <a href="/register" className="text-purple-600 hover:text-purple-700 font-semibold">Register</a></p>
+        </div>
       </div>
     </div>
   );

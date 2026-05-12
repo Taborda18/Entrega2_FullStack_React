@@ -66,97 +66,96 @@ const Register = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-50 p-4">
-      {/* Reducción de max-w y padding para evitar el scroll vertical */}
-      <div className="w-full max-w-4xl bg-white rounded-2xl shadow-xl border border-gray-100 overflow-hidden transition-all">
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-purple-50 via-purple-100 to-fuchsia-50 p-4">
+      <div className="w-full max-w-2xl bg-white/95 backdrop-blur rounded-2xl shadow-2xl border border-purple-100 overflow-hidden animate-slide-up">
         <div className="p-6 md:p-10">
 
-          <header className="mb-6 text-center">
-            <h2 className="text-3xl font-bold text-gray-900 tracking-tight">Crear cuenta</h2>
-            <p className="text-gray-500 text-sm mt-1">Únete a nuestra comunidad hoy mismo</p>
+          <header className="mb-8 text-center">
+            <h2 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-500 bg-clip-text text-transparent">Create Account</h2>
+            <p className="text-gray-600 text-base mt-2">Join our community today</p>
           </header>
 
           {error && (
-            <div className="mb-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded-lg">
+            <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded-lg animate-slide-down">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-4">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
 
-              {/* Columna Izquierda: Información Personal */}
+              {/* Left Column: Personal Information */}
               <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Nombre completo</label>
+                <div className="form-group">
+                  <label className="form-label">Full Name</label>
                   <input
                     type="text"
                     name="name"
                     required
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 outline-none transition-all placeholder:text-gray-400"
-                    placeholder="Ej. Juan Pérez"
+                    className="form-input"
+                    placeholder="John Doe"
                     onChange={handleChange}
                   />
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Correo electrónico</label>
+                <div className="form-group">
+                  <label className="form-label">Email</label>
                   <input
                     type="email"
                     name="email"
                     required
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 outline-none transition-all placeholder:text-gray-400"
-                    placeholder="correo@ejemplo.com"
+                    className="form-input"
+                    placeholder="john@example.com"
                     onChange={handleChange}
                   />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Celular</label>
+                  <div className="form-group">
+                    <label className="form-label text-sm">Phone</label>
                     <input
                       type="tel"
                       name="cellphone"
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 outline-none transition-all"
-                      placeholder="+57 300..."
+                      className="form-input"
+                      placeholder="+1 555..."
                       onChange={handleChange}
                     />
                   </div>
-                  <div>
-                    <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Dirección</label>
+                  <div className="form-group">
+                    <label className="form-label text-sm">Address</label>
                     <input
                       type="text"
                       name="address"
-                      className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 outline-none transition-all"
-                      placeholder="Calle 123..."
+                      className="form-input"
+                      placeholder="123 Main St..."
                       onChange={handleChange}
                     />
                   </div>
                 </div>
               </div>
 
-              {/* Columna Derecha: Seguridad */}
+              {/* Right Column: Security */}
               <div className="space-y-4">
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Contraseña</label>
+                <div className="form-group">
+                  <label className="form-label">Password</label>
                   <input
                     type="password"
                     name="password"
                     required
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 outline-none transition-all"
+                    className="form-input"
                     placeholder="••••••••"
                     onChange={handleChange}
                   />
-                  <p className="text-[10px] text-gray-400 mt-1 italic">Mínimo 8 caracteres (letras y números).</p>
+                  <p className="text-xs text-text-secondary mt-1">Min. 8 characters (letters & numbers)</p>
                 </div>
 
-                <div>
-                  <label className="block text-xs font-semibold text-gray-700 uppercase tracking-wider mb-1">Confirmar contraseña</label>
+                <div className="form-group">
+                  <label className="form-label">Confirm Password</label>
                   <input
                     type="password"
                     name="confirmPassword"
                     required
-                    className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-600 outline-none transition-all"
+                    className="form-input"
                     placeholder="••••••••"
                     onChange={handleChange}
                   />
@@ -164,17 +163,17 @@ const Register = () => {
               </div>
             </div>
 
-            {/* Acción y Footer más compactos */}
+            {/* Action Buttons */}
             <div className="pt-4 space-y-4">
               <button
                 type="submit"
-                className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-lg shadow-md hover:shadow-lg transition-all active:scale-[0.98] text-base"
+                className="form-btn w-full"
               >
-                Registrarse
+                Create Account
               </button>
 
-              <p className="text-center text-sm text-gray-500">
-                ¿Ya tienes una cuenta? <Link to="/login" className="text-indigo-600 font-semibold hover:underline">Inicia sesión</Link>
+              <p className="text-center text-text-secondary">
+                Already have an account? <Link to="/login" className="text-purple-600 font-semibold hover:text-purple-700">Sign in</Link>
               </p>
             </div>
           </form>
