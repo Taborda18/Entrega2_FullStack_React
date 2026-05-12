@@ -1,0 +1,144 @@
+================================================================================
+                        QUICK REFERENCE GUIDE
+                   Missing API Integrations - Button Analysis
+================================================================================
+
+🔴 CRITICAL ISSUES - FIX IMMEDIATELY
+================================================================================
+
+1. CHECKOUT FORM SUBMISSION
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ File: src/components/organisms/checkout/Checkout.jsx               │
+   │ Line: 111-116 (Form submit button)                                  │
+   │ Problem: Orders NOT saved to API                                    │
+   │                                                                     │
+   │ Current Code to Fix:                                                │
+   │ ┌───────────────────────────────────────────────────────────────┐  │
+   │ │ const handleSubmit = (event) => {                             │  │
+   │ │   event.preventDefault();                                     │  │
+   │ │   clearCart();                                                │  │
+   │ │   setSuccess(true);                                           │  │
+   │ │ };                                                            │  │
+   │ └───────────────────────────────────────────────────────────────┘  │
+   │                                                                     │
+   │ Must Add:                                                           │
+   │ - Call createCart() from cartService                               │
+   │ - Call updateUser() or createUser() from userService               │
+   │ - Handle API errors                                                │
+   │ - Show loading state during submission                             │
+   │                                                                     │
+   │ Services to Import:                                                │
+   │ import { createCart, updateCart } from '../../../services/cartService'
+   │ import { createUser, updateUser } from '../../../services/userService'
+   │                                                                     │
+   │ Affected Users: ALL customers - Orders are never saved!            │
+   └─────────────────────────────────────────────────────────────────────┘
+
+
+🟠 HIGH PRIORITY - FIX SOON
+================================================================================
+
+2. CART OPERATIONS NOT SYNCED
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ File A: src/components/organisms/cart/Cart.jsx                      │
+   │ Lines: 59 (decrement), 67 (increment), 75 (remove)                  │
+   │                                                                     │
+   │ File B: src/components/organisms/productDetail/ProductDetail.jsx    │
+   │ Line: 139 (add to cart)                                             │
+   │                                                                     │
+   │ Problem: Cart changes only stored in localStorage, not API          │
+   │                                                                     │
+   │ Buttons Not Synced:                                                 │
+   │ ├─ Cart.jsx Line 59: [−] Decrement button                          │
+   │ ├─ Cart.jsx Line 67: [+] Increment button                          │
+   │ ├─ Cart.jsx Line 75: [X] Remove button                             │
+   │ └─ ProductDetail.jsx Line 139: [Add to Cart] button                │
+   │                                                                     │
+   │ Solution Options:                                                   │
+   │ Option A (Immediate Sync - Slower):                                │
+   │   └─ After each button click, call updateCartOnAPI()               │
+   │                                                                     │
+   │ Option B (Lazy Sync - Faster):                                     │
+   │   └─ Call syncCartToAPI() only before checkout                     │
+   │                                                                     │
+   │ Option C (Debounced Sync - Best):                                  │
+   │   └─ Batch updates with debounce, sync every 2 seconds             │
+   │                                                                     │
+   │ Store Methods Available:                                            │
+   │ - updateCartOnAPI(cartId, userId)                                  │
+   │ - syncCartToAPI(userId)                                            │
+   │ - loadCartFromAPI(cartId)                                          │
+   │                                                                     │
+   │ Impact: Multi-device access, cart persistence across sessions      │
+   └─────────────────────────────────────────────────────────────────────┘
+
+
+🟡 MEDIUM PRIORITY - NICE TO HAVE
+================================================================================
+
+3. USER DATA NOT SAVED
+   ┌─────────────────────────────────────────────────────────────────────┐
+   │ File: src/components/organisms/checkout/Checkout.jsx               │
+   │ Lines: 79-109 (Form fields for name, email, address)               │
+   │                                                                     │
+   │ Problem: Form collects data but doesn't save to API                │
+   │                                                                     │
+   │ Form Fields Being Ignored:                                         │
+   │ - fullName (Line 80-87)                                            │
+   │ - email (Line 90-98)                                               │
+   │ - address (Line 101-109)                                           │
+   │                                                                     │
+   │ Solution:                                                           │
+   │ In handleSubmit(), before setSuccess(true):                        │
+   │   await updateUser(userId, {                                      │
+   │     name: formData.fullName,                                       │
+   │     email: formData.email,                                         │
+   │     address: formData.address                                      │
+   │   });                                                              │
+   │                                                                     │
+   │ Impact: Customer records, order history, profile data              │
+   └─────────────────────────────────────────────────────────────────────┘
+
+
+================================================================================
+                          API SERVICES AVAILABLE
+================================================================================
+
+✓ ALREADY IN USE:
+  - getProducts() - Gallery component
+  - getProductById(id) - ProductDetail component
+
+✗ AVAILABLE BUT NOT USED:
+  - createCart(cartData) - ⚠️ NEEDED
+  - updateCart(cartId, cartData) - ⚠️ NEEDED
+  - createUser(userData)
+  - updateUser(userId, userData) - ⚠️ NEEDED
+  - getAllCarts(), getCartById(), getCartsByUserId()
+  - getAllUsers(), getUserById()
+
+
+================================================================================
+                          BUTTON COUNT SUMMARY
+================================================================================
+
+Total Buttons Analyzed: 11
+├─ Buttons Missing API Integration: 5
+│  ├─ CRITICAL: 1 (checkout form submit)
+│  ├─ HIGH: 3 (cart operations)
+│  └─ MEDIUM: 1 (add to cart)
+├─ Navigation Links (No API Needed): 5 ✓
+└─ UI Controls (No API Needed): 1 ✓
+
+By Component:
+├─ Cart.jsx: 3/4 buttons need API integration
+├─ Checkout.jsx: 1/3 buttons need API integration (CRITICAL)
+└─ ProductDetail.jsx: 1/4 buttons need API integration
+
+
+================================================================================
+                         FILES TO MODIFY
+================================================================================
+
+MUST MODIFY (Priority 1):
+  1. src/components/organisms/checkout/Checkout.jsx
+     - Update handleSubmit
