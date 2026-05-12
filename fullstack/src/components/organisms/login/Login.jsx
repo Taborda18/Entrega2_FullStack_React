@@ -2,18 +2,16 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import logo1 from "../../../assets/logo1.png";
-import { loginUser } from "../../../services/authService";
 import { loginWithFakeStore } from "../../../services/fakeStoreAuth";
 
 const Login = () => {
   const navigate = useNavigate();
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  const [useAPI, setUseAPI] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,16 +23,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      let result;
-
-      if (useAPI) {
-        // FakeStore API login - use username instead of email
-        const username = formData.email.split('@')[0]; // Extract username from email
-        result = await loginWithFakeStore(username, formData.password);
-      } else {
-        // Local auth
-        result = await loginUser(formData.email, formData.password);
-      }
+      const result = await loginWithFakeStore(formData.username, formData.password);
 
       if (result.success) {
         navigate('/gallery');
@@ -88,26 +77,8 @@ const Login = () => {
           </motion.div>
         )}
 
-        {/* API Toggle */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="mb-6 flex items-center gap-3 p-3 rounded-lg bg-white/5"
-        >
-          <label className="flex items-center gap-2 cursor-pointer text-white/70 text-sm">
-            <input
-              type="checkbox"
-              checked={useAPI}
-              onChange={(e) => setUseAPI(e.target.checked)}
-              className="w-4 h-4 rounded border-white/30"
-            />
-            Use FakeStore API
-          </label>
-        </motion.div>
-
         <form className="space-y-6" onSubmit={handleSubmit}>
-          {/* Email Input */}
+          {/* Username Input */}
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
@@ -115,14 +86,14 @@ const Login = () => {
             className="relative group"
           >
             <label className="block text-white/70 text-sm mb-2 font-semibold group-focus-within:text-fuchsia-400 transition-colors">
-              {useAPI ? 'Username' : 'Email'}
+              Username
             </label>
             <input
-              type={useAPI ? "text" : "email"}
-              name="email"
-              value={formData.email}
+              type="text"
+              name="username"
+              value={formData.username}
               onChange={handleChange}
-              placeholder={useAPI ? "e.g. johnd" : "your@email.com"}
+              placeholder="e.g. johnd"
               className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-white/40 focus:outline-none focus:border-fuchsia-400 focus:bg-white/15 transition-all"
               required
             />
@@ -149,22 +120,21 @@ const Login = () => {
             />
           </motion.div>
 
-          {useAPI && (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.3 }}
-              className="p-3 bg-blue-500/10 border border-blue-400/30 rounded-lg text-blue-300 text-xs"
-            >
-              💡 Tip: Try username <strong>johnd</strong> with password <strong>m38rmF$</strong>
-            </motion.div>
-          )}
+          {/* Demo Tip */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3 }}
+            className="p-3 bg-blue-500/10 border border-blue-400/30 rounded-lg text-blue-300 text-xs"
+          >
+            💡 <strong>Demo credentials:</strong> johnd / m38rmF$
+          </motion.div>
 
           {/* Login Button */}
           <motion.button
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.3 }}
+            transition={{ delay: 0.35 }}
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             type="submit"
@@ -196,3 +166,4 @@ const Login = () => {
 };
 
 export default Login;
+
