@@ -1,0 +1,127 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-blue: #4d61ff;
+  --color-brand-dark: #32325d;
+  --color-brand-muted: #8898aa;
+  --color-brand-border: #dee2e6;
+  --radius-dna: 0.5rem;
+  --shadow-dna: 0 4px 11px rgba(77, 97, 255, 0.35);
+}
+
+:root {
+  --surface-page: oklch(98.4% 0.009 285);
+  --surface-card: oklch(100% 0 0 / 0.84);
+  --surface-strong: oklch(20.7% 0.04 286);
+  --text-primary: oklch(25.5% 0.02 276);
+  --text-secondary: oklch(49% 0.022 275);
+  --brand-500: oklch(58% 0.21 312);
+  --brand-600: oklch(52% 0.2 312);
+  --brand-100: oklch(94% 0.035 312);
+  --ring-soft: 0 0 0 6px color-mix(in oklab, var(--brand-500), white 82%);
+}
+
+body {
+  min-height: 100dvh;
+  color: var(--text-primary);
+  background:
+    radial-gradient(circle at 12% 8%, oklch(92% 0.06 325 / 0.6), transparent 28%),
+    radial-gradient(circle at 82% 15%, oklch(92% 0.06 242 / 0.58), transparent 27%),
+    radial-gradient(circle at 44% 90%, oklch(93% 0.05 170 / 0.46), transparent 33%),
+    var(--surface-page);
+}
+
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+p {
+  text-wrap: pretty;
+}
+
+@layer components {
+  .glass-panel {
+    @apply border border-white/70 bg-white/75 backdrop-blur-xl;
+    box-shadow: 0 24px 56px oklch(22% 0.03 280 / 0.12);
+  }
+
+  .hero-panel {
+    background: linear-gradient(135deg, oklch(18% 0.045 275), oklch(30% 0.11 308));
+    box-shadow: 0 24px 54px oklch(31% 0.12 308 / 0.35);
+  }
+
+  .pill-action {
+    @apply rounded-full border px-4 py-2 text-sm font-semibold transition;
+    border-color: color-mix(in oklab, var(--brand-500), white 74%);
+    color: var(--text-secondary);
+  }
+
+  .pill-action:hover {
+    background: color-mix(in oklab, var(--brand-500), white 90%);
+    color: var(--brand-600);
+  }
+
+  .input-luxe {
+    @apply w-full rounded-2xl border bg-white/90 px-4 py-3 text-sm font-medium outline-none transition;
+    border-color: color-mix(in oklab, var(--brand-500), white 84%);
+  }
+
+  .input-luxe:focus {
+    border-color: var(--brand-500);
+    box-shadow: var(--ring-soft);
+  }
+
+  .card-luxe {
+    @apply relative overflow-hidden rounded-[1.8rem] border bg-white/85 p-3 backdrop-blur-xl transition duration-500;
+    border-color: color-mix(in oklab, var(--brand-500), white 86%);
+    box-shadow: 0 18px 38px oklch(22% 0.03 290 / 0.16);
+  }
+
+  .card-luxe:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 26px 50px oklch(56% 0.15 312 / 0.23);
+  }
+
+  .product-grid {
+    display: grid;
+    gap: 1.25rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+  }
+
+  @supports (container-type: inline-size) {
+    .card-luxe {
+      container-type: inline-size;
+    }
+
+    @container (width < 240px) {
+      .card-cta {
+        width: 100%;
+      }
+    }
+  }
+
+  .input-dna {
+    @apply w-full border-b border-brand-border py-2 text-brand-dark 
+           outline-none transition-all duration-200 
+           focus:border-brand-blue placeholder:text-brand-muted/50;
+  }
+
+  .btn-dna {
+    @apply flex items-center justify-center gap-2 bg-brand-blue text-white 
+           px-8 py-3 rounded-dna font-semibold transition-all 
+           hover:brightness-110 hover:shadow-dna active:scale-95;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
