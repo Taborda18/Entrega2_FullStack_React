@@ -4,7 +4,7 @@ import AnimatedBackground from '../atoms/AnimatedBackground';
 
 export default function Layout() {
   return (
-    <div className="relative min-h-screen flex flex-col overflow-hidden bg-gray-50">
+    <div className="relative min-h-screen flex flex-col overflow-hidden">
       <AnimatedBackground />
       <div className="ambient-blob ambient-blob--one pointer-events-none -z-10" />
       <div className="ambient-blob ambient-blob--two pointer-events-none -z-10" />
